@@ -12,11 +12,11 @@ pipeline {
     stages {
 		stage('Stage 1 - job2') { 
         	steps {
-            	echo ('Do some staff with credential')
-            	
+            	echo ('Do some staff with CredsToUse : ' + CredsToUse)
             	sshagent([CredsToUse]){
-					sh 'ssh '+sshUserAtServer+' \'echo job2 : $(date) $(id) >> /tmp/myConnection.log\';'
-				}
+					echo ('DO SSH connection with agent... ')
+            		sh 'ssh '+sshUserAtServer+' \'echo job2 : $(date) $(id) >> /tmp/myConnection.log\';'
+				} 
 			}
         }
     }
