@@ -1,0 +1,23 @@
+pipeline {
+    agent any
+	
+	parameters {
+         credentials(name: 'CredsToUse', description: 'Utilisateur deployement', defaultValue: '', credentialType: "SSH Username with private key", required: true )
+    }
+    
+    environment {
+    	sshUserAtServer = 'user@server'
+    }
+     
+    stages {
+		stage('Stage 1 - job2') { 
+        	steps {
+            	echo ('Do some staff with credential')
+            	
+            	sshagent([CredsToUse]){
+					sh 'ssh '+sshUserAtServer+' \'echo job2 : $(date) $(id) >> /tmp/myConnection.log\';'
+				}
+			}
+        }
+    }
+}
